@@ -1,61 +1,33 @@
-import React from 'react'; 
+import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'; // Import axios for API calls
-import "./Nav.css";
-import log2 from '../assets/logo.png';
-import MenuItems from "./MenuItems";
+import log2 from '../assets/log2.png';
 
-
-
-
-function Nav({ user, setUser }) {
-  const handleLogout = async () => {
-    try {
-      await axios.post("http://localhost:5000/logout", {}, { withCredentials: true });
-      setUser(null); // Clear the user state
-      alert("Successfully logged out!");
-    } catch (error) {
-      console.error("Logout failed:", error);
-      alert("Logout failed. Please try again.");
-    }
-  };
-
+function Nav({ user }) {
   return (
-    <div className="navbar">
-      <MenuItems />
-
+    <div className="h-20 max-w-7xl mx-auto p-6 bg-slate-700 rounded-lg shadow-lg m-4 flex items-center justify-between px-6">
       {/* Logo Section */}
-      <div className="navbar-logo">
-        <img src={log2} alt="logo" />
+      <div className="flex items-center space-x-3">
+        <img src={log2} alt="logo" className="h-12 w-12 rounded-lg" />
+        <span className="text-white text-2xl ml-20 font-bold">LEARN HOW TO PREPARE DELICIOUS MEALS</span>
       </div>
 
       {/* Navigation Links */}
-      <div className="navbar-links">
-        <Link to="/">Home</Link>
-        <Link to="/Discover">Discover Us</Link>
-        <Link to="/About">About Us</Link>
-        <Link to="/Contact">Contact Us</Link>
-        {/* <Link to="/Me">Profile</Link> */}
-        {/* <Link to="/Prof">Profile</Link> */}
-      </div>
-
-      {/* User Section */}
-      <div className="navbar-buttons">
+      <div className="flex items-center space-x-6">
         {!user ? (
           <>
-            <Link to="/Login">
-              <button className="signup">Login</button>
+            <Link to="/Login" className="text-slate-100 font-semibold hover:text-blue-300 transition-colors">
+              Login
             </Link>
-            <Link to="/Register">
-              <button className="login">Sign Up</button>
+            <Link to="/Register" className="text-slate-100 font-semibold hover:text-blue-300 transition-colors">
+              Register
             </Link>
           </>
         ) : (
-          <div className="user-info">
-            <div className="user-avatar">{user.name.charAt(0).toUpperCase()}
-              
+          <div className="flex items-center space-x-4">
+            <span className="text-slate-100 font-semibold">{user.name}</span>
+            <div className="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center">
+              {user.name.charAt(0).toUpperCase()}
             </div>
-            <button onClick={handleLogout} className="logout-button">Logout</button>
           </div>
         )}
       </div>
